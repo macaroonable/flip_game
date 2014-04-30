@@ -1,7 +1,8 @@
 //populate a canvas containing lists of blocks
-function Canvas(canvas_height,canvas_width){
+function Canvas(canvas_height,canvas_width,ismobile){
 	this.width = canvas_width;
 	this.height = canvas_height;
+	this.ismobile = ismobile;
 	this.block_map = new Array(this.width);
 	for(var i=0;i<this.block_map.length;i++){
 		this.block_map[i] = new Array(this.height);
@@ -9,7 +10,14 @@ function Canvas(canvas_height,canvas_width){
 }
 
 Canvas.prototype.createGrid = function(){
-var cell_dim = ((($("#gameplay").height()>$("#gameplay").width())? $("#gameplay").width():$("#gameplay").height())*0.7)/(this.width)
+var cell_dim ;
+if(this.ismobile)
+{
+	cell_dim = ((($("#gameplay").height()>$("#gameplay").width())? $("#gameplay").width():$("#gameplay").height())*0.8)/(this.width)
+}
+else{
+	cell_dim = ((($("#gameplay").height()>$("#gameplay").width())? $("#gameplay").width():$("#gameplay").height())*0.8)/(this.width)
+}
 
 	for(var i = 0; i<this.height;i++){
 			$("#canvas-container").append($("<div></div>").attr('id',('div_row'+i)).attr('class','div_row')) 

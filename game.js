@@ -20,12 +20,34 @@ return "";
 
 
 $(function(){
+var uagent = navigator.userAgent.toLowerCase();
+var ismobile = ((uagent.search('iphone') != -1)||(uagent.search('android') != -1)||(uagent.search('ipad') != -1)||(uagent.search('webos') != -1)||(uagent.search('blackberry') != -1));
 
-var	cv = new Canvas(9,9); //use 10,10 for publish
+if(ismobile){
+//mobile detected
+$("#ui").css("width","90%");
+$("#gameplay").css("width","90%");
+
+$("#gameplay").css("float","none");
+$("#gameplay").css("margin-left","auto");
+$("#gameplay").css("margin-right","auto");
+$("#gameplay").css("margin-bottom","10%");
+
+
+
+$("#scoreCounter").css("float","none");
+$("#scoreCounter").css("margin-left","auto");
+$("#scoreCounter").css("margin-right","auto");
+}
+
+
+var	cv = new Canvas(8,8,ismobile); //use 10,10 for publish
 	cv.createGrid();
 var steps = 0;
 var before_best= getCookie("before_best");
 $("#before_best b").html((before_best=="")?"N/A":before_best);
+
+
 
 $(".again").mousedown(function(){
 	location.reload();

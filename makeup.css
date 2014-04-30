@@ -83,14 +83,14 @@ position: relative;
 		height: 90%;
 		margin-left: auto;
 		margin-right:auto;
-		margin-top: 5%;
+		margin-top: 3%;
 		
 }
 
 #gamePlay
 {		
 		width: 70%;
-		height: 80%;
+		height: 100%;
 		float:left;
 		/*border: 2px black solid;*/
 }
@@ -99,7 +99,7 @@ position: relative;
 #scoreCounter
 {
 		width: 20%;
-		height: 80%;
+		/*height: 100%;*/
 		float:right;
 }
 
@@ -130,19 +130,8 @@ position: relative;
 	
 	
 }
+
 again{
-	color: rgba(250,98,220,0.91);
-
-	font-size: large;
-	text-align: center;	
-	padding: auto;
-	margin-left: auto;
-	margin-right: auto;	
-	margin-top: 50%;
-
-
-	
-	
-	
 
 }
+
