@@ -7,6 +7,10 @@ this.value = false;
 $("#div_row"+this.y).append($("<div></div>").attr("id",this.id).attr('class','div_cell normal_cell border_norm'));
 
 }
+Block.prototype.reset = function(){
+	this.value = false;
+	$("#"+this.id).attr('class','div_cell normal_cell border_norm');
+}
 
 Block.prototype.toggle = function(){
 	this.value = !this.value;

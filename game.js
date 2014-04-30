@@ -1,3 +1,127 @@
+var steps;
+var his_step;
+var before_best;
+var	cv;
+var ismobile;
+var game_width = 8;
+var game_height = 8;
+
+
+$(function(){
+steps = 0;
+his_step = [];
+before_best = getCookie("before_best");
+$("#before_best b").html((before_best=="")?"N/A":before_best);
+var uagent = navigator.userAgent.toLowerCase();
+ismobile = ((uagent.search('iphone') != -1)||(uagent.search('android') != -1)||(uagent.search('ipad') != -1)||(uagent.search('webos') != -1)||(uagent.search('blackberry') != -1));
+var longbrowser =  ($(window).height() > $(window).width());
+
+if(longbrowser){
+	//long browser
+	$("#gamePlay").css("clear", "left");
+	$("#scoreCounter").css("clear","right");
+	$("body").css("padding-top","1%");
+	
+	$(".ui").css("height","150%");
+	$(".ui").css("width","100%");	
+	$("#gamePlay").css("width","100%");
+	$("#gamePlay").css("height", "50%");
+	$("#scoreCounter").css("width","100%");
+	$("#scoreCounter").css("margin-left","auto");
+	$("#scoreCounter").css("margin-right","auto");
+	$("#scoreCounter").css("height","60%");
+	$("#scoreCounter div").css("height","15%");
+}
+
+if((!longbrowser)&&(ismobile)){
+//mobile landscape
+
+	$("#gamePlay").css("clear", "left");
+	$("#scoreCounter").css("clear","right");
+	$("body").css("padding-top","1%");
+	
+	$(".ui").css("margin-top","0");
+	$(".ui").css("height","140%");
+	$(".ui").css("width","100%");
+	
+	$("#gamePlay").css("width","100%");
+	$("#gamePlay").css("height", "68%");
+	
+	$("#scoreCounter").css("width","100%");
+	$("#scoreCounter").css("margin-left","auto");
+	$("#scoreCounter").css("margin-right","auto");
+	$("#scoreCounter").css("height","60%");
+	$("#scoreCounter div").css("height","15%");
+}
+
+
+
+cv = new Canvas(game_height,game_width,ismobile); 
+cv.createGrid();
+
+$(".again").mousedown(function(){
+		resetGame();
+});
+$(".div_cell").mouseenter(function(){
+		$(this).toggleClass("border_norm");
+		$(this).toggleClass("border_hover");
+		$.each(getNeighbor($(this)),function(index,content){
+			$("#"+content).toggleClass("border_norm");
+			$("#"+content).toggleClass("border_hover");
+		})	
+})
+$(".div_cell").mouseleave(function(){
+		$(this).toggleClass("border_norm");
+		$(this).toggleClass("border_hover");
+			$.each(getNeighbor($(this)),function(index,content){
+			$("#"+content).toggleClass("border_norm");
+			$("#"+content).toggleClass("border_hover");
+		})
+
+})
+
+$(".div_cell").mousedown(
+			function(){	
+			flip($(this));}
+)
+
+
+})
+function resetGame(){
+	cv.reset();
+	steps = 0;
+	$("#current_steps b").html(steps);
+	his_step = [];
+}
+
+function flip(selector){
+			steps ++;
+			$("#current_steps b").html(steps);
+	 		var position = selector.attr('id').substring(1,selector.attr('id').length).split('_');
+	 		cv.block_map[parseInt(position[0])][parseInt(position[1])].toggle();
+	 		his_step.push([parseInt(position[0]),parseInt(position[1])]);
+			$.each(getNeighbor(selector),function(index,content){
+
+	 		var position = $("#"+content).attr('id').substring(1,$("#"+content).attr('id').length).split('_');
+	 		cv.block_map[parseInt(position[0])][parseInt(position[1])].toggle();
+
+		})
+
+			 		if(cv.checkFinish()){
+				 		setTimeout(function(){
+					 		//gameFinished
+					 	$("#finish_wrap").css("display","block");
+					 	//update cookie
+					 	if((before_best== "")||(parseInt(before_best) > steps)){
+						setCookie("before_best",steps,200)					 	
+						$("#before_best b").html(steps);
+					 	}
+											 	
+					 }, 200);}
+}
+
+
+
 function setCookie(cname,cvalue,exdays)
 {
 var d = new Date();
@@ -17,94 +141,6 @@ for(var i=0; i<ca.length; i++)
 }
 return "";
 }
-
-
-$(function(){
-var uagent = navigator.userAgent.toLowerCase();
-var ismobile = ((uagent.search('iphone') != -1)||(uagent.search('android') != -1)||(uagent.search('ipad') != -1)||(uagent.search('webos') != -1)||(uagent.search('blackberry') != -1));
-
-if(ismobile){
-//mobile detected
-$("#ui").css("width","90%");
-$("#gameplay").css("width","90%");
-
-$("#gameplay").css("float","none");
-$("#gameplay").css("margin-left","auto");
-$("#gameplay").css("margin-right","auto");
-$("#gameplay").css("margin-bottom","10%");
-
-
-
-$("#scoreCounter").css("float","none");
-$("#scoreCounter").css("margin-left","auto");
-$("#scoreCounter").css("margin-right","auto");
-}
-
-
-var	cv = new Canvas(8,8,ismobile); //use 10,10 for publish
-	cv.createGrid();
-var steps = 0;
-var before_best= getCookie("before_best");
-$("#before_best b").html((before_best=="")?"N/A":before_best);
-
-
-
-$(".again").mousedown(function(){
-	location.reload();
-});
-$(".div_cell").mouseenter(function(){
-		$(this).toggleClass("border_norm");
-		$(this).toggleClass("border_hover");
-		$.each(getNeighbor($(this)),function(index,content){
-			$("#"+content).toggleClass("border_norm");
-			$("#"+content).toggleClass("border_hover");
-		})
-		
-})
-
-$(".div_cell").mouseleave(function(){
-		$(this).toggleClass("border_norm");
-		$(this).toggleClass("border_hover");
-			$.each(getNeighbor($(this)),function(index,content){
-			$("#"+content).toggleClass("border_norm");
-			$("#"+content).toggleClass("border_hover");
-		})
-
-})
-
-$(".div_cell").mousedown(function(){
-			//toggle itself
-//			$(this).toggleClass("normal_cell");
-//			$(this).toggleClass("flipped_cell");
-			steps ++;
-			$("#current_steps b").html(steps);
-	 		var position = $(this).attr('id').substring(1,$(this).attr('id').length).split('_');
-	 		cv.block_map[parseInt(position[0])][parseInt(position[1])].toggle();
-
-			//toggle the neighbor
-			$.each(getNeighbor($(this)),function(index,content){
-//			$("#"+content).toggleClass("normal_cell");
-//			$("#"+content).toggleClass("flipped_cell");
-
-	 		var position = $("#"+content).attr('id').substring(1,$("#"+content).attr('id').length).split('_');
-	 		cv.block_map[parseInt(position[0])][parseInt(position[1])].toggle();
-
-		})
-
-			 		if(cv.checkFinish()){
-				 		setTimeout(function(){
-					 		//gameFinished
-					 	$("#finish_wrap").css("display","block");
-					 	//update cookie
-					 	if((before_best== "")||(parseInt(before_best) > steps)){
-						setCookie("before_best",steps,200)					 	
-						$("#before_best b").html(steps);
-					 	}
-											 	
-					 }, 200);}
-})
-
-})
 
 
 

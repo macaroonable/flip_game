@@ -2,7 +2,7 @@
 html, body 
 {
   margin: 0;
-  padding-top:20px;
+  padding-top:2%;
   background: #effaf4;
   color: #443f4c;
   font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
@@ -11,8 +11,6 @@ html, body
 
 #canvas-container
 {
-margin-top: 10px;
-border:0px solid blue;
 /*height and width are to be changed dynamically*/
 margin-left:auto;
 margin-right:auto;
@@ -53,6 +51,8 @@ position: relative;
 		-o-transition: background-color 500ms linear;
 		-ms-transition: background-color 500ms linear;
 		transition: background-color 500ms linear;
+
+
 }
 .border_hover
 {
@@ -79,7 +79,7 @@ position: relative;
 .ui
 {
 
-		width: 70%;
+		width: 80%;
 		height: 90%;
 		margin-left: auto;
 		margin-right:auto;
@@ -89,17 +89,20 @@ position: relative;
 
 #gamePlay
 {		
-		width: 70%;
-		height: 100%;
 		float:left;
-		/*border: 2px black solid;*/
+		width: 70%;
+		height: 90%;
+
+
 }
 
 
 #scoreCounter
 {
-		width: 20%;
-		/*height: 100%;*/
+		width: 15%;
+		margin-right: 15%;
+		margin-top:3%;
+		height: 90%;
 		float:right;
 }
 

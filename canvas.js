@@ -1,23 +1,26 @@
-//populate a canvas containing lists of blocks
 function Canvas(canvas_height,canvas_width,ismobile){
 	this.width = canvas_width;
 	this.height = canvas_height;
 	this.ismobile = ismobile;
 	this.block_map = new Array(this.width);
 	for(var i=0;i<this.block_map.length;i++){
-		this.block_map[i] = new Array(this.height);
+	this.block_map[i] = new Array(this.height);
 	}
 }
 
 Canvas.prototype.createGrid = function(){
 var cell_dim ;
+
+//set the dimension of each cell
 if(this.ismobile)
 {
-	cell_dim = ((($("#gameplay").height()>$("#gameplay").width())? $("#gameplay").width():$("#gameplay").height())*0.8)/(this.width)
+	cell_dim = ((($("#gamePlay").height()>$("#gamePlay").width())? $("#gamePlay").width():$("#gamePlay").height())*0.8)/(this.width)
 }
 else{
-	cell_dim = ((($("#gameplay").height()>$("#gameplay").width())? $("#gameplay").width():$("#gameplay").height())*0.8)/(this.width)
+	cell_dim = ((($("#gamePlay").height()>$("#gamePlay").width())? $("#gamePlay").width():$("#gamePlay").height())*0.8)/(this.width)
 }
+	cell_dim = (cell_dim > 30)?cell_dim:30;
+
 
 	for(var i = 0; i<this.height;i++){
 			$("#canvas-container").append($("<div></div>").attr('id',('div_row'+i)).attr('class','div_row')) 
@@ -26,9 +29,12 @@ else{
 				
 		}	
 	}
-		//update UI
-//	if(this.width < 10)	{
-	//we only expand the size if it's too small
+
+
+	if(this.ismobile){
+	$(".div_cell").css("border-radius","3px");
+	$(".div_cell").css("margin","1px");
+}
 	$(".div_cell").css({"height":parseInt(cell_dim, 10) + "px","width":parseInt(cell_dim, 10) + "px"})
 //	}
 	$(".div_row").css({"height":$(".div_cell").outerHeight(true)+"px","width":this.width*($(".div_cell").outerWidth(true))+"px"});
@@ -43,6 +49,14 @@ Canvas.prototype.checkFinish = function(){
 		}
 	}
 	return finished;
+}
+
+Canvas.prototype.reset = function(){
+//reset the internal block and the UI display
+		for(var i = 0; i<this.height;i++){
+			for(var j = 0; j<this.width; j++){
+			this.block_map[i][j].reset();}	
+}
 }
 
 
