@@ -1,0 +1,42 @@
+<html>
+	<head>					
+	<title>FLIP</title>
+				<link rel="icon" type="image/png" href="favicon.png" />
+				<link rel='stylesheet' media='screen and (max-width: 900px)' href='makeup_narrow.css' />
+				<link rel='stylesheet' media='screen and (min-width: 901px)' href='makeup.css' />
+
+				<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>				
+				<script src = "canvas.js"> </script>
+				<script src = "block.js"></script>
+
+	</head>
+	
+	<body>
+		<div id= "main_body" class = "ui">
+			<div id = "gameplay">
+				<div id = "canvas-container">
+				<div id = "finish_wrap" style="display:none"> 
+						CONGRATULATIONS 
+					<div id= "replay" class = "again"> PLAY AGAIN</div>
+				</div>
+
+				</div>
+				<script src = "game.js"> </script>
+			</div>
+		
+			<div id = "scoreCounter">
+
+				<div id = "instruction"> <b style="font-size:xx-large">FLIP</b> all the tiles with minimum steps!</div>
+				<div id = "current_steps"> 	Steps: <b>0</b></div>
+				<div id = "before_best"> 	Best: <b>1000</b></div>
+				<div id = "menu">
+				<div id= "reset" class = "again" style="color:orange"> RESET </div></div>
+				<div id = "author" style = "font-size:small"><p><i>Developed by Hugo S</i></p></div>
+
+
+			</div>
+			
+		</div>
+
+	</body>
+</html>
